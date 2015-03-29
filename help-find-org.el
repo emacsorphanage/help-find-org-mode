@@ -54,6 +54,18 @@
 ;;    or invoke it interactively with
 ;; M-x help-find-org
 
+;; Note that for this package to work, org source code needs to bt
+;; tangled with certain flags. The only non-default flag that needs to
+;; be set is ':comments link'.
+
+;; The below code defines an easy template that inserts a source block
+;; with linked comments that is tangled to the default file:
+
+;; (add-to-list 'org-structure-template-alist
+;; 	     '("S"
+;; 	       "#+BEGIN_SRC ? :comments link :tangle yes\n\n#+END_SRC"
+;; 	       "<src lang=\"?\">\n\n</src>"))
+
 ;;; Code:
 (defgroup help-find-org nil
   "Advise help functions that find source files to find org babel
