@@ -66,6 +66,8 @@
 ;; 	       "#+BEGIN_SRC ? :comments link :tangle yes\n\n#+END_SRC"
 ;; 	       "<src lang=\"?\">\n\n</src>"))
 
+;; expand it by inserting "<S" and hitting TAB
+
 ;;; Code:
 (defgroup help-find-org nil
   "Advise help functions that find source files to find org babel
