@@ -35,10 +35,24 @@
 ;; - don't find the .el file also (kill it if it wasn't open before,
 ;;   bury if it was open but not visiable) add easy templates for
 ;; - convenient global use of this package
+;; - add continuous integration
 
 ;;; Usage:
 
+;; with `use-package:
+
+;; (use-package help-find-org
+;;   :config (help-find-org 1))
+
+;; - or -
+
 ;; (require 'help-find-org)
+
+;; along with one of the following:
+
+;; (help-find-org 1)
+;;    or invoke it interactively with
+;; M-x help-find-org
 
 ;;; Code:
 (defgroup help-find-org nil
@@ -55,6 +69,11 @@ source blocks instead of tangled source."
   "Functions advised by `help-find-org'."
   :type '(repeat function)
   :group 'help-find-org)
+
+;; ideally these would all be generated with a mapping function but I
+;; was finding conflicts from the fact that `defadvice' is itself a
+;; macro and couldn't take arguments that weren't expanded fully. I
+;; know pitifully little about expanding arguments.
 
 (defadvice find-function (after find-function-in-org  activate)
   "Advise `find-function' to find org babel files to relevant
@@ -98,7 +117,7 @@ relevant source blocks instead of finding tangled code."
   "Advise help functions that find source files to find org babel
 source blocks instead of tangled source."
   :init-value t
-  :global t
+nil  :global t
   :group 'help-find-org
   (if help-find-org
       (help-find-org-turn-on)
