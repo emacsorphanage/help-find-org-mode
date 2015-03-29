@@ -1,0 +1,6 @@
+* Test file
+This file provides a very simple package.
+#+BEGIN_SRC emacs-lisp :comments link :tangle yes
+  (defun help-find-org-test-fn ())
+  (provide 'help-find-org-test-lib)
+#+END_SRC
