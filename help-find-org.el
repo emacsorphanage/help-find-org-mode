@@ -66,7 +66,7 @@
 ;; 	       "#+BEGIN_SRC ? :comments link :tangle yes\n\n#+END_SRC"
 ;; 	       "<src lang=\"?\">\n\n</src>"))
 
-;; expand it by inserting "<S" and hitting TAB
+;; expand it by inserting "<S" and hitting
 
 ;;; Code:
 (defgroup help-find-org nil
