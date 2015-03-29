@@ -90,7 +90,7 @@ source blocks instead of tangled source."
 (defadvice find-function (after find-function-in-org  activate)
   "Advise `find-function' to find org babel files to relevant
 source blocks instead of finding tangled code."
-  (ignore-errors (org-babel-tangle-jump-to-org)))
+  (org-babel-tangle-jump-to-org))
 
 (defadvice find-variable (after find-variable-in-org activate)
   "Advise `find-variable' to find org babel files to relevant
