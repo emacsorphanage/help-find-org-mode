@@ -89,27 +89,27 @@ source blocks instead of tangled source."
 ;; macro and couldn't take arguments that weren't expanded fully. I
 ;; know pitifully little about expanding arguments.
 
-(defadvice find-function (after find-function-in-org  activate)
+(defadvice find-function (after find-function-in-org)
   "Advise `find-function' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (org-babel-tangle-jump-to-org))
 
-(defadvice find-variable (after find-variable-in-org activate)
+(defadvice find-variable (after find-variable-in-org)
   "Advise `find-variable' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-library (after find-library-in-org activate)
+(defadvice find-library (after find-library-in-org)
   "Advise `find-library' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-function-at-point (after find-function-at-point-in-org activate)
+(defadvice find-function-at-point (after find-function-at-point-in-org)
   "Advise `find-function-at-point' to find org babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-variable-at-point (after find-variable-at-point-in-org activate)
+(defadvice find-variable-at-point (after find-variable-at-point-in-org)
   "Advise `find-variable-at-point' to find org babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
