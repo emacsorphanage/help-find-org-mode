@@ -32,37 +32,77 @@
 ;; user.
 
 ;;; TODOs
-;; - create a minor mode to enable/disable all advice
+;; - don't find the .el file also (kill it if it wasn't open before,
+;;   bury if it was open but not visiable) add easy templates for
+;; - convenient global use of this package
 
 ;;; Usage:
 
 ;; (require 'help-find-org)
 
 ;;; Code:
+(defgroup help-find-org nil
+  "Advise help functions that find source files to find org babel
+source blocks instead of tangled source."
+  :group 'help)
+
+(defcustom help-find-org-advised-functions
+  '(find-function
+    find-variable
+    find-library
+    find-function-at-point
+    find-variable-at-point)
+  "Functions advised by `help-find-org'."
+  :type '(repeat function)
+  :group 'help-find-org)
+
 (defadvice find-function (after find-function-in-org  activate)
   "Advise `find-function' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-variable (after find-variable activate)
+(defadvice find-variable (after find-variable-in-org activate)
   "Advise `find-variable' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-library (after find-library activate)
+(defadvice find-library (after find-library-in-org activate)
   "Advise `find-library' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-function-at-point (after find-function-at-point activate)
+(defadvice find-function-at-point (after find-function-at-point-in-org activate)
   "Advise `find-function-at-point' to find org babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-variable-at-point (after find-variable-at-point activate)
+(defadvice find-variable-at-point (after find-variable-at-point-in-org activate)
   "Advise `find-variable-at-point' to find org babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
+
+(defun help-find-org-turn-on ()
+  "Turn on mode `help-find-org'."
+  (mapc (lambda (help-fn)
+	  (ad-enable-advice help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
+	help-find-org-advised-functions))
+
+(defun help-find-org-turn-off ()
+  "Turn off mode `help-find-org'."
+  (mapc (lambda (help-fn)
+	  (ad-disable-advice help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
+	help-find-org-advised-functions))
+
+;;;###autoload
+(define-minor-mode help-find-org
+  "Advise help functions that find source files to find org babel
+source blocks instead of tangled source."
+  :init-value t
+  :global t
+  :group 'help-find-org
+  (if help-find-org
+      (help-find-org-turn-on)
+    (help-find-org-turn-off)))
 
 (provide 'help-find-org)
 
