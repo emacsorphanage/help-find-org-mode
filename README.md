@@ -1,4 +1,4 @@
-# help-find-org
+# help-find-org [![Build Status](https://travis-ci.org/EricCrosson/help-find-org.svg)](https://travis-ci.org/EricCrosson/help-find-org)
 ---
 
 This package advises all help functions that find files. The new
