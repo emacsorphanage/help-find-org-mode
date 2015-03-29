@@ -1,6 +1,4 @@
 (require 'org)
-;; (require 'ob)
-;; (require 'ob-tangle)
 
 (defcustom help-find-org-test-lib "help-find-org-test-lib"
   "Test library name for `help-find-org-test'.")
