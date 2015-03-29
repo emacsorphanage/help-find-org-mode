@@ -33,7 +33,7 @@
 
 ;;; TODOs
 ;; - don't find the .el file also (kill it if it wasn't open before,
-;;   bury if it was open but not visiable) add easy templates for
+;;   bury if it was open but not visiable)
 
 ;;; Usage:
 
