@@ -115,13 +115,15 @@ relevant source blocks instead of finding tangled code."
 (defun help-find-org-turn-on ()
   "Turn on mode `help-find-org'."
   (mapc (lambda (help-fn)
-	  (ad-enable-advice help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
+	  (ad-enable-advice
+	   help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
 	help-find-org-advised-functions))
 
 (defun help-find-org-turn-off ()
   "Turn off mode `help-find-org'."
   (mapc (lambda (help-fn)
-	  (ad-disable-advice help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
+	  (ad-disable-advice
+	   help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
 	help-find-org-advised-functions))
 
 ;;;###autoload
