@@ -67,7 +67,7 @@
 ;; expand it by inserting "<S" and hitting
 
 ;;; Code:
-(require 'org)
+(require 'ob-tangle)
 
 (defgroup help-find-org nil
   "Advise help functions that find source files to find org babel
