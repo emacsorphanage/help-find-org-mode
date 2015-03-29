@@ -131,7 +131,7 @@ relevant source blocks instead of finding tangled code."
   "Advise help functions that find source files to find org babel
 source blocks instead of tangled source."
   :init-value t
-nil  :global t
+  :global t
   :group 'help-find-org
   (if help-find-org
       (help-find-org-turn-on)
