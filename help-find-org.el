@@ -35,7 +35,6 @@
 ;; - don't find the .el file also (kill it if it wasn't open before,
 ;;   bury if it was open but not visiable) add easy templates for
 ;; - convenient global use of this package
-;; - add continuous integration
 
 ;;; Usage:
 
