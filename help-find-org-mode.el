@@ -1,4 +1,4 @@
-;;; help-find-org-mode.el --- Advise GNU Emacs to find org source-files instead of tangled code-definitions
+;;; help-find-org-mode.el --- Advise GNU Emacs to find org source-files instead of tangled code-definitions -*- lexical-binding: t; -*-
 ;;
 ;;; Copyright (C) 2018  Free Software Foundation, Inc.
 ;;
@@ -43,6 +43,8 @@
 ;; with `use-package:
 
 ;; (use-package help-find-org-mode
+;;   :ensure t
+;;   :pin melpa-stable
 ;;   :config (help-find-org-mode 1))
 
 ;; - or -
@@ -71,7 +73,7 @@
 
 ;;; TODO:
 ;; - don't find the .el file also (kill it if it wasn't open before,
-;;   bury if it was open but not visable)
+;;   bury if it was open but not visible)
 
 ;;; Code:
 
@@ -83,28 +85,28 @@ source blocks instead of tangled source."
   :group 'help)
 
 (defun find-function-in-org (fn)
-  "Advise `find-function' to find org babel files to relevant
+  "Advise `find-function' to find org-babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors
     (org-babel-tangle-jump-to-org)))
 
 (defun find-variable-in-org (var)
-  "Advise `find-variable' to find org babel files to relevant
+  "Advise `find-variable' to find org-babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 (defun find-library-in-org (library)
-  "Advise `find-library' to find org babel files to relevant
+  "Advise `find-library' to find org-babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 (defun find-function-at-point-in-org (fn)
-  "Advise `find-function-at-point' to find org babel files to
+  "Advise `find-function-at-point' to find org-babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 (defun find-variable-at-point-in-org (var)
-  "Advise `find-variable-at-point' to find org babel files to
+  "Advise `find-variable-at-point' to find org-babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
