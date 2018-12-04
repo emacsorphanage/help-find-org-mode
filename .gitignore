@@ -1,3 +1,4 @@
-/help-find-org-autoloads.el
-/help-find-org-autoloads.el~
-/help-find-org.elc
+.DS_Store
+*.elc
+flycheck*
+/ert-tests/help-find-org-test-lib.el
