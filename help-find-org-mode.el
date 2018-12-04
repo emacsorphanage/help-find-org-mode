@@ -6,7 +6,7 @@
 ;; Version: 1.0.0
 ;; Keywords: convenience
 ;; URL: https://github.com/EricCrosson/help-find-org-mode
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "24.4") (org) (ob-tangle))
 ;;
 ;; This file is not a part of GNU Emacs.
 ;;
@@ -77,6 +77,7 @@
 
 ;;; Code:
 
+(require 'org)
 (require 'ob-tangle)
 
 (defgroup help-find-org nil
@@ -98,11 +99,11 @@ source blocks instead of tangled source."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 (defun help-find-org-function-at-point ()
-  "Advise `find-function-at-point' to find org-babel source-block defining function-at-point instead of finding tangled code."
+  "Advise `find-function-at-point' to find org-babel source-block defining function-at-point instead of tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 (defun help-find-org-variable-at-point ()
-  "Advise `find-variable-at-point' to find org-babel source-block defining `variable-at-point' instead of finding tangled code."
+  "Advise `find-variable-at-point' to find org-babel source-block defining `variable-at-point' instead of tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 
