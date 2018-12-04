@@ -1,4 +1,4 @@
-;;; help-find-org-mode.el --- Advise GNU Emacs to find org source-files instead of tangled code-definitions -*- lexical-binding: t; -*-
+;;; help-find-org-mode.el --- Advise help to find org source over tangled code -*- lexical-binding: t; -*-
 ;;
 ;;; Copyright (C) 2018  Free Software Foundation, Inc.
 ;;
@@ -6,7 +6,7 @@
 ;; Version: 1.0.0
 ;; Keywords: convenience
 ;; URL: https://github.com/EricCrosson/help-find-org-mode
-;; Package-Requires: ((emacs "24"))
+;; Package-Requires: ((emacs "24.4"))
 ;;
 ;; This file is not a part of GNU Emacs.
 ;;
@@ -84,56 +84,53 @@
 source blocks instead of tangled source."
   :group 'help)
 
-(defun find-function-in-org (fn)
-  "Advise `find-function' to find org-babel files to relevant
-source blocks instead of finding tangled code."
+(defun help-find-org-function (_func)
+  "Advise `find-function' to find org-babel source-block defining _FUNC instead of tangled code."
   (ignore-errors
     (org-babel-tangle-jump-to-org)))
 
-(defun find-variable-in-org (var)
-  "Advise `find-variable' to find org-babel files to relevant
-source blocks instead of finding tangled code."
+(defun help-find-org-variable (_var)
+  "Advise `find-variable' to find org-babel source-block defining _VAR instead of code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defun find-library-in-org (library)
-  "Advise `find-library' to find org-babel files to relevant
-source blocks instead of finding tangled code."
+(defun help-find-org-library (_library)
+  "Advise `find-library' to find org-babel source-block defining _LIBRARY instead of tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defun find-function-at-point-in-org (fn)
-  "Advise `find-function-at-point' to find org-babel files to
-relevant source blocks instead of finding tangled code."
+(defun help-find-org-function-at-point ()
+  "Advise `find-function-at-point' to find org-babel source-block defining function-at-point instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defun find-variable-at-point-in-org (var)
-  "Advise `find-variable-at-point' to find org-babel files to
-relevant source blocks instead of finding tangled code."
+(defun help-find-org-variable-at-point ()
+  "Advise `find-variable-at-point' to find org-babel source-block defining `variable-at-point' instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
 
 (defun help-find-org-mode-turn-on ()
-  "Turn on mode `help-find-org-mode'."
-  (advice-add 'find-function :after #'find-function-in-org)
-  (advice-add 'find-variable :after #'find-variable-in-org)
-  (advice-add 'find-library :after #'find-library-in-org)
-  (advice-add 'find-function-at-point :after #'find-function-at-point-in-org)
-  (advice-add 'find-variable-at-point :after #'find-variable-at-point-in-org))
+  "Turn on minor-mode `help-find-org-mode'."
+  (advice-add 'find-function :after #'help-find-org-function)
+  (advice-add 'find-variable :after #'help-find-org-variable)
+  (advice-add 'find-library :after #'help-find-org-library)
+  (advice-add 'find-function-at-point :after #'help-find-org-function-at-point)
+  (advice-add 'find-variable-at-point :after #'help-find-org-variable-at-point))
 
 (defun help-find-org-mode-turn-off ()
-  "Turn off mode `help-find-org-mode'."
-  (advice-remove 'find-function #'find-function-in-org)
-  (advice-remove 'find-variable #'find-variable-in-org)
-  (advice-remove 'find-library #'find-library-in-org)
-  (advice-remove 'find-function-at-point #'find-function-at-point-in-org)
-  (advice-remove 'find-variable-at-point #'find-variable-at-point-in-org))
+  "Turn off minor-mode `help-find-org-mode'."
+  (advice-remove 'find-function #'help-find-org-function)
+  (advice-remove 'find-variable #'help-find-org-variable)
+  (advice-remove 'find-library #'help-find-org-library)
+  (advice-remove 'find-function-at-point #'help-find-org-function-at-point)
+  (advice-remove 'find-variable-at-point #'help-find-org-variable-at-point))
 
 ;;;###autoload
 (define-minor-mode help-find-org-mode
   "Advise help functions that find source files to find org babel
 source blocks instead of tangled source."
   :init-value nil
+  :lighter nil
   :global t
   :group 'help-find-org
+  :require 'help-find-org-mode
   (if help-find-org-mode
       (help-find-org-mode-turn-on)
     (help-find-org-mode-turn-off)))
