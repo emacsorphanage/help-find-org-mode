@@ -22,7 +22,7 @@
 
 ;;; Commentary:
 
-;; This package advises help functions that find code. Each function
+;; This package advises help functions that find code.  Each function
 ;; is advised to open org babel files to the appropriate source block
 ;; instead of tangled code.
 
@@ -74,59 +74,78 @@
 source blocks instead of tangled source."
   :group 'help)
 
-(defcustom help-find-org-advised-functions
-  '(find-function
-    find-variable
-    find-library
-    find-function-at-point
-    find-variable-at-point)
-  "Functions advised by `help-find-org'."
-  :type '(repeat function)
-  :group 'help-find-org)
+;; (defcustom help-find-org-advised-functions
+;;   '(find-function
+;;     find-variable
+;;     find-library
+;;     find-function-at-point
+;;     find-variable-at-point)
+;;   "Functions advised by `help-find-org'."
+;;   :type '(repeat function)
+;;   :group 'help-find-org)
 
+;; Old FIXME:
 ;; ideally these would all be generated with a mapping function but I
 ;; was finding conflicts from the fact that `defadvice' is itself a
 ;; macro and couldn't take arguments that weren't expanded fully. I
 ;; know pitifully little about expanding arguments.
 
-(defadvice find-function (after find-function-in-org)
+(defun find-function-in-org (fn)
   "Advise `find-function' to find org babel files to relevant
 source blocks instead of finding tangled code."
-  (org-babel-tangle-jump-to-org))
+  (ignore-errors
+    (org-babel-tangle-jump-to-org)))
 
-(defadvice find-variable (after find-variable-in-org)
+(defun find-variable-in-org (var)
   "Advise `find-variable' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-library (after find-library-in-org)
+(defun find-library-in-org (library)
   "Advise `find-library' to find org babel files to relevant
 source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-function-at-point (after find-function-at-point-in-org)
+(defun find-function-at-point-in-org (fn)
   "Advise `find-function-at-point' to find org babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-(defadvice find-variable-at-point (after find-variable-at-point-in-org)
+(defun find-variable-at-point-in-org (var)
   "Advise `find-variable-at-point' to find org babel files to
 relevant source blocks instead of finding tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
+;;; wip
+;;;
+
+
+
 (defun help-find-org-turn-on ()
   "Turn on mode `help-find-org'."
-  (mapc (lambda (help-fn)
-	  (ad-enable-advice
-	   help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
-	help-find-org-advised-functions))
+  (advice-add 'find-function :after #'find-function-in-org)
+  (advice-add 'find-variable :after #'find-function-in-org)
+  (advice-add 'find-library :after #'find-library-in-org)
+  (advice-add 'find-function-at-point :after #'find-function-at-point-in-org)
+  (advice-add 'find-variable-at-point :after #'find-variable-at-point-in-org)
+  ;; (mapc (lambda (help-fn)
+  ;;         (ad-enable-advice
+  ;;          help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
+  ;;       help-find-org-advised-functions)
+  )
 
 (defun help-find-org-turn-off ()
   "Turn off mode `help-find-org'."
-  (mapc (lambda (help-fn)
-	  (ad-disable-advice
-	   help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
-	help-find-org-advised-functions))
+  (advice-remove 'find-function #'find-function-in-org)
+  (advice-remove 'find-variable #'find-variable-in-org)
+  (advice-remove 'find-library #'find-library-in-org)
+  (advice-remove 'find-function-at-point #'find-function-at-point-in-org)
+  (advice-remove 'find-variable-at-point #'find-variable-at-point-in-org)
+  ;; (mapc (lambda (help-fn)
+  ;;         (ad-disable-advice
+  ;;          help-fn 'after (intern (format "%s-in-org" (symbol-name help-fn)))))
+  ;;       help-find-org-advised-functions)
+  )
 
 ;;;###autoload
 (define-minor-mode help-find-org
