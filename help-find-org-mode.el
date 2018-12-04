@@ -6,7 +6,7 @@
 ;; Version: 1.0.0
 ;; Keywords: convenience
 ;; URL: https://github.com/EricCrosson/help-find-org-mode
-;; Package-Requires: ((emacs "24.4") (org) (ob-tangle "24.1"))
+;; Package-Requires: ((emacs "24.4"))
 ;;
 ;; This file is not a part of GNU Emacs.
 ;;
