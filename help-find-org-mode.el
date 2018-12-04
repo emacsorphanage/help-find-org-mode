@@ -45,7 +45,7 @@
 ;; (use-package help-find-org-mode
 ;;   :ensure t
 ;;   :pin melpa-stable
-;;   :config (help-find-org-mode 1))
+;;   :config (help-find-org-mode t))
 
 ;; - or -
 
@@ -53,7 +53,7 @@
 
 ;; along with one of the following:
 
-;; (help-find-org-mode 1)
+;; (help-find-org-mode t)
 ;;    or invoke it interactively with
 ;; M-x help-find-org-mode
 
