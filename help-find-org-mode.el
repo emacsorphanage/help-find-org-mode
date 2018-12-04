@@ -106,23 +106,6 @@ source blocks instead of tangled source."
   "Advise `find-variable-at-point' to find org-babel source-block defining `variable-at-point' instead of tangled code."
   (ignore-errors (org-babel-tangle-jump-to-org)))
 
-
-(defun help-find-org-mode-turn-on ()
-  "Turn on minor-mode `help-find-org-mode'."
-  (advice-add 'find-function :after #'help-find-org-function)
-  (advice-add 'find-variable :after #'help-find-org-variable)
-  (advice-add 'find-library :after #'help-find-org-library)
-  (advice-add 'find-function-at-point :after #'help-find-org-function-at-point)
-  (advice-add 'find-variable-at-point :after #'help-find-org-variable-at-point))
-
-(defun help-find-org-mode-turn-off ()
-  "Turn off minor-mode `help-find-org-mode'."
-  (advice-remove 'find-function #'help-find-org-function)
-  (advice-remove 'find-variable #'help-find-org-variable)
-  (advice-remove 'find-library #'help-find-org-library)
-  (advice-remove 'find-function-at-point #'help-find-org-function-at-point)
-  (advice-remove 'find-variable-at-point #'help-find-org-variable-at-point))
-
 ;;;###autoload
 (define-minor-mode help-find-org-mode
   "Advise help functions that find source files to find org babel
@@ -133,8 +116,17 @@ source blocks instead of tangled source."
   :group 'help-find-org
   :require 'help-find-org-mode
   (if help-find-org-mode
-      (help-find-org-mode-turn-on)
-    (help-find-org-mode-turn-off)))
+      (progn
+        (advice-add 'find-function :after #'help-find-org-function)
+        (advice-add 'find-variable :after #'help-find-org-variable)
+        (advice-add 'find-library :after #'help-find-org-library)
+        (advice-add 'find-function-at-point :after #'help-find-org-function-at-point)
+        (advice-add 'find-variable-at-point :after #'help-find-org-variable-at-point))
+    (advice-remove 'find-function #'help-find-org-function)
+    (advice-remove 'find-variable #'help-find-org-variable)
+    (advice-remove 'find-library #'help-find-org-library)
+    (advice-remove 'find-function-at-point #'help-find-org-function-at-point)
+    (advice-remove 'find-variable-at-point #'help-find-org-variable-at-point)))
 
 
 (provide 'help-find-org-mode)
